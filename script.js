@@ -50,6 +50,34 @@ document.getElementById("preferencesForm").addEventListener("submit", function (
 });
 
 // Apply preferences when the page loads
+// window.onload = function () {
+//   applyPreferences();
+// };
+
+// Ensure the form exists before adding event listeners
 window.onload = function () {
-  applyPreferences();
+  const preferencesForm = document.getElementById("preferencesForm");
+  if (preferencesForm) {
+    preferencesForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const fontSize = document.getElementById("fontsize").value;
+      const fontColor = document.getElementById("fontcolor").value;
+
+      // Set cookies for font size and color, expire in 7 days
+      setCookie("fontsize", fontSize, 7);
+      setCookie("fontcolor", fontColor, 7);
+
+      // Apply the preferences immediately
+      document.body.style.fontSize = fontSize + "px";
+      document.body.style.color = fontColor;
+    });
+
+    applyPreferences();
+  } else {
+    console.error("Form not found");
+  }
 };
+
+// Other functions like setCookie, getCookie, and applyPreferences remain the same
+
